@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — Rajniti Samachar</title>
+  <meta name="description" content="Rajniti Samachar ke baare mein — India ka free AI-powered bilingual political news portal.">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#c0392b">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Sans+Devanagari:wght@300;400;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --ink:#1a1008; --paper:#f5f0e8; --red:#c0392b; --cream:#faf6ee; --gray:#6b6355; --light:#eae5db; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--ink); font-family:'Noto Sans Devanagari',sans-serif; color:var(--ink); }
+    nav { background:var(--ink); padding:0 20px; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; z-index:100; border-bottom:2px solid var(--red); }
+    .nav-logo { font-family:'Playfair Display',serif; font-size:18px; font-weight:900; color:var(--paper); padding:14px 0; text-decoration:none; }
+    .nav-logo span { color:var(--red); }
+    .nav-links a { color:var(--light); text-decoration:none; font-family:'Courier Prime',monospace; font-size:10px; letter-spacing:1px; text-transform:uppercase; padding:14px 12px; display:inline-block; border-left:1px solid #333; }
+    .nav-links a:hover { background:var(--red); color:white; }
+    .page { max-width:700px; margin:0 auto; background:var(--cream); min-height:100vh; padding:32px 20px 80px; }
+    h1 { font-family:'Playfair Display',serif; font-size:28px; font-weight:900; margin-bottom:6px; }
+    h1 span { color:var(--red); }
+    .divider { height:3px; background:var(--ink); margin:16px 0; border:none; }
+    h2 { font-family:'Playfair Display',serif; font-size:18px; font-weight:700; margin:24px 0 10px; border-left:4px solid var(--red); padding-left:12px; }
+    p { font-size:14px; line-height:1.8; color:#444; margin-bottom:12px; }
+    .contact-box { background:var(--paper); border:2px solid var(--ink); padding:20px; margin-top:28px; }
+    .contact-box h3 { font-family:'Playfair Display',serif; font-size:16px; font-weight:700; margin-bottom:10px; }
+    footer { background:var(--ink); color:var(--paper); padding:20px; text-align:center; }
+    footer p { font-family:'Courier Prime',monospace; font-size:10px; color:#666; }
+    footer a { color:var(--red); text-decoration:none; }
+    .bottom-nav { display:none; position:fixed; bottom:0; left:0; right:0; background:var(--ink); border-top:2px solid var(--red); z-index:999; padding:6px 0 10px; }
+    .bottom-nav a { display:flex; flex-direction:column; align-items:center; color:#aaa; text-decoration:none; font-family:'Courier Prime',monospace; font-size:8px; gap:3px; flex:1; }
+    .bottom-nav a.active { color:var(--red); }
+    .bottom-nav .nav-row { display:flex; justify-content:space-around; }
+    .bottom-nav span.icon { font-size:18px; }
+    @media (max-width:600px) { .bottom-nav { display:block; } body { padding-bottom:65px; } .nav-links { display:none; } }
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">Rajniti <span>Samachar</span></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</nav>
+<div class="page">
+  <h1>Hamare <span>Baare Mein</span></h1>
+  <hr class="divider">
+
+  <h2>Rajniti Samachar Kya Hai?</h2>
+  <p>Rajniti Samachar ek free AI-powered political news tool hai jo Indian politics ki latest khabrein Hindi aur English dono mein deta hai. Hum Google Gemini AI ka use karke web se real-time news fetch karte hain aur use readable format mein present karte hain.</p>
+  <p>Hamara maqsad hai ki political news sirf English walon tak seemit na rahe — har Hindi bolne wala bhi aasani se apni rajneeti samajh sake.</p>
+
+  <h2>Hum Kya Dete Hain?</h2>
+  <p>Koi bhi political topic par AI se latest news mangwaao — BJP, Congress, Modi, state politics, elections — sab kuch. News Hindi aur English dono mein milti hai. Ek click mein professional PDF report bhi download kar sakte ho.</p>
+
+  <h2>Technology</h2>
+  <p>Rajniti Samachar Google Gemini AI model use karta hai jo real-time web search karke latest news laata hai. Ye ek simple free website hai — koi login nahi, koi subscription nahi.</p>
+
+  <h2>Disclaimer</h2>
+  <p>Yahan di gayi news AI-generated hai aur publicly available web sources pe based hai. Ye kisi bhi political party ki official position nahi hai. Hamesha original sources se verify karein. Hamaara kisi bhi party se koi sambandh nahi hai.</p>
+
+  <div class="contact-box">
+    <h3>Contact</h3>
+    <p>📧 Email: contact@rajnitisamachar.in</p>
+    <p>🌐 Website: rajnitisamachar.in</p>
+  </div>
+</div>
+
+<footer>
+  <p>© 2025 <a href="index.html">Rajniti Samachar</a> &nbsp;·&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; Made in India 🇮🇳</p>
+</footer>
+
+<div class="bottom-nav">
+  <div class="nav-row">
+    <a href="index.html"><span class="icon">🏠</span>Home</a>
+    <a href="about.html" class="active"><span class="icon">ℹ️</span>About</a>
+    <a href="privacy.html"><span class="icon">🔒</span>Privacy</a>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>राजनीति समाचार — AI Political News Hindi & English</title>
+  <meta name="description" content="AI se latest Indian politics news Hindi aur English mein padhein aur PDF download karein. Free bilingual political news tool.">
+  <meta name="keywords" content="india politics news, hindi political news, BJP news, Congress news, Modi news, rajniti samachar">
+  <!-- Google AdSense — Approval ke baad uncomment karo -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#c0392b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Rajniti Samachar">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Noto+Sans+Devanagari:wght@300;400;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    :root {
+      --ink: #1a1008;
+      --paper: #f5f0e8;
+      --red: #c0392b;
+      --cream: #faf6ee;
+      --gray: #6b6355;
+      --light: #eae5db;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--ink); font-family: 'Noto Sans Devanagari', sans-serif; color: var(--ink); }
+
+    /* NAV */
+    nav { background: var(--ink); padding: 0 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid var(--red); }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 900; color: var(--paper); padding: 14px 0; text-decoration: none; }
+    .nav-logo span { color: var(--red); }
+    .nav-links { display: flex; }
+    .nav-links a { color: var(--light); text-decoration: none; font-family: 'Courier Prime', monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 14px 12px; transition: background 0.2s; border-left: 1px solid #333; }
+    .nav-links a:hover { background: var(--red); color: white; }
+
+    /* MASTHEAD */
+    .masthead { background: var(--paper); border-bottom: 4px double var(--ink); padding: 20px 20px 16px; text-align: center; position: relative; overflow: hidden; }
+    .masthead::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: repeating-linear-gradient(90deg, var(--red) 0, var(--red) 20px, transparent 20px, transparent 22px); }
+    .masthead-date { font-family: 'Courier Prime', monospace; font-size: 10px; color: var(--gray); letter-spacing: 2px; margin-bottom: 6px; }
+    .masthead-title { font-family: 'Playfair Display', serif; font-size: clamp(26px, 6vw, 52px); font-weight: 900; color: var(--ink); line-height: 1; margin-bottom: 4px; }
+    .masthead-title span { color: var(--red); }
+    .masthead-sub { font-family: 'Courier Prime', monospace; font-size: 9px; color: var(--gray); border-top: 1px solid var(--gray); border-bottom: 1px solid var(--gray); display: inline-block; padding: 3px 16px; margin-top: 6px; letter-spacing: 2px; }
+
+    /* AD SLOT TOP */
+    .ad-top { background: var(--light); padding: 8px; text-align: center; border-bottom: 1px solid #ccc; }
+    .ad-label { font-family: 'Courier Prime', monospace; font-size: 8px; color: var(--gray); letter-spacing: 2px; margin-bottom: 4px; }
+    .ad-box { background: #e8e3d8; border: 1px dashed #bbb; height: 80px; display: flex; align-items: center; justify-content: center; font-family: 'Courier Prime', monospace; font-size: 9px; color: var(--gray); max-width: 728px; margin: 0 auto; }
+
+    /* MAIN */
+    .container { max-width: 800px; margin: 0 auto; background: var(--cream); padding: 24px 16px 60px; min-height: 80vh; }
+
+    /* CONTROL PANEL */
+    .control-panel { background: var(--paper); border: 2px solid var(--ink); padding: 20px; margin-bottom: 20px; position: relative; }
+    .control-panel::before { content: 'SEARCH'; position: absolute; top: -9px; left: 14px; background: var(--paper); padding: 0 8px; font-family: 'Courier Prime', monospace; font-size: 9px; letter-spacing: 2px; color: var(--gray); }
+    .panel-row { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 12px; }
+    label { display: block; font-family: 'Courier Prime', monospace; font-size: 9px; letter-spacing: 2px; color: var(--gray); text-transform: uppercase; margin-bottom: 5px; }
+    input, select { width: 100%; background: white; border: 1.5px solid #c5bba8; padding: 9px 12px; font-family: 'Noto Sans Devanagari', sans-serif; font-size: 14px; color: var(--ink); outline: none; }
+    input:focus, select:focus { border-color: var(--red); }
+    .btn-fetch { background: var(--ink); color: var(--paper); border: none; padding: 10px 22px; font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.2s; }
+    .btn-fetch:hover { background: var(--red); }
+    .btn-fetch:disabled { background: var(--gray); cursor: not-allowed; }
+    .quick-topics { display: flex; gap: 6px; flex-wrap: wrap; }
+    .quick-btn { background: none; border: 1px solid var(--gray); color: var(--gray); font-family: 'Courier Prime', monospace; font-size: 9px; padding: 4px 10px; cursor: pointer; transition: all 0.2s; }
+    .quick-btn:hover { border-color: var(--red); color: var(--red); }
+
+    /* STATUS */
+    .status-bar { display: none; align-items: center; gap: 10px; padding: 8px 12px; background: #eae5db; border-left: 3px solid #b8860b; font-family: 'Courier Prime', monospace; font-size: 11px; color: var(--gray); margin-bottom: 14px; }
+    .status-bar.active { display: flex; }
+    .spinner { width: 13px; height: 13px; border: 2px solid var(--gray); border-top-color: var(--red); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* NEWS CARDS */
+    .news-output { display: none; }
+    .news-output.visible { display: block; }
+    .output-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 2px solid var(--ink); padding-bottom: 10px; }
+    .output-header h2 { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; }
+    .btn-pdf { background: var(--red); color: white; border: none; padding: 8px 18px; font-family: 'Courier Prime', monospace; font-size: 9px; letter-spacing: 1px; cursor: pointer; }
+    .btn-pdf:hover { background: #a93226; }
+
+    .news-card { background: white; border: 1px solid #ddd8cc; border-left: 4px solid var(--red); padding: 16px 18px; margin-bottom: 12px; animation: fadeUp 0.3s ease forwards; opacity: 0; }
+    .news-card:nth-child(1){animation-delay:0.05s} .news-card:nth-child(2){animation-delay:0.1s} .news-card:nth-child(3){animation-delay:0.15s} .news-card:nth-child(4){animation-delay:0.2s} .news-card:nth-child(5){animation-delay:0.25s} .news-card:nth-child(6){animation-delay:0.3s} .news-card:nth-child(7){animation-delay:0.35s}
+    @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    .news-num { font-family: 'Courier Prime', monospace; font-size: 9px; color: var(--red); letter-spacing: 2px; margin-bottom: 5px; }
+    .news-hl { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; line-height: 1.3; margin-bottom: 5px; }
+    .news-hl-en { font-family: 'Courier Prime', monospace; font-size: 11px; color: var(--gray); font-style: italic; margin-bottom: 10px; }
+    .news-body { font-size: 13px; line-height: 1.7; border-top: 1px solid #e8e2d8; padding-top: 10px; }
+    .news-hi { margin-bottom: 7px; color: var(--ink); }
+    .news-en { color: var(--gray); font-size: 12px; font-style: italic; }
+    .news-src { display: inline-block; margin-top: 8px; font-family: 'Courier Prime', monospace; font-size: 8px; color: white; background: var(--gray); padding: 2px 7px; }
+
+    .error-box { background: #fdf2f2; border-left: 4px solid var(--red); padding: 12px 16px; font-size: 13px; color: var(--red); display: none; margin-bottom: 14px; }
+
+    /* AD MIDDLE */
+    .ad-middle { margin: 20px 0; }
+
+    /* FOOTER */
+    footer { background: var(--ink); color: var(--paper); padding: 20px; text-align: center; }
+    footer p { font-family: 'Courier Prime', monospace; font-size: 10px; color: #666; }
+    footer a { color: var(--red); text-decoration: none; }
+
+    /* MOBILE BOTTOM NAV */
+    .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: var(--ink); border-top: 2px solid var(--red); z-index: 999; padding: 6px 0 10px; }
+    .bottom-nav a { display: flex; flex-direction: column; align-items: center; color: #aaa; text-decoration: none; font-family: 'Courier Prime', monospace; font-size: 8px; gap: 3px; flex: 1; }
+    .bottom-nav a.active { color: var(--red); }
+    .bottom-nav .nav-row { display: flex; justify-content: space-around; }
+    .bottom-nav span.icon { font-size: 18px; }
+
+    @media (max-width: 600px) {
+      .bottom-nav { display: block; }
+      body { padding-bottom: 65px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Rajniti <span>Samachar</span></a>
+  <div class="nav-links">
+    <a href="about.html">About</a>
+    <a href="privacy.html">Privacy</a>
+  </div>
+</nav>
+
+<div class="masthead">
+  <div class="masthead-date" id="today-date"></div>
+  <div class="masthead-title">राजनीति <span>समाचार</span></div>
+  <div class="masthead-sub">AI POWERED · HINDI & ENGLISH · FREE</div>
+</div>
+
+<!-- TOP AD -->
+<div class="ad-top">
+  <div class="ad-label">ADVERTISEMENT</div>
+  <div class="ad-box">AdSense Ad (728×90) — Approval ke baad yahan dikhega</div>
+</div>
+
+<div class="container">
+
+  <div class="control-panel">
+    <div class="panel-row">
+      <div style="flex:1; min-width:180px;">
+        <label>Topic likho</label>
+        <input type="text" id="topic-input" placeholder="BJP, Modi, Congress, elections..." value="India politics latest news today"/>
+      </div>
+      <div style="width:130px;">
+        <label>Khabarein</label>
+        <select id="count-select">
+          <option value="3">3 Khabarein</option>
+          <option value="5" selected>5 Khabarein</option>
+          <option value="7">7 Khabarein</option>
+        </select>
+      </div>
+      <button class="btn-fetch" id="fetch-btn" onclick="fetchNews()">📰 Fetch Karo</button>
+    </div>
+    <div>
+      <label>Quick Topics</label>
+      <div class="quick-topics">
+        <button class="quick-btn" onclick="setTopic('BJP latest news')">BJP</button>
+        <button class="quick-btn" onclick="setTopic('Congress party news')">Congress</button>
+        <button class="quick-btn" onclick="setTopic('Modi government news')">Modi</button>
+        <button class="quick-btn" onclick="setTopic('Rahul Gandhi news')">Rahul Gandhi</button>
+        <button class="quick-btn" onclick="setTopic('India state elections')">Elections</button>
+        <button class="quick-btn" onclick="setTopic('Indian parliament news')">Parliament</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="status-bar" id="status-bar">
+    <div class="spinner"></div>
+    <span id="status-text">News aa rahi hai...</span>
+  </div>
+
+  <div class="error-box" id="error-box"></div>
+
+  <div class="news-output" id="news-output">
+    <div class="output-header">
+      <h2 id="output-title">Latest Political News</h2>
+      <button class="btn-pdf" onclick="generatePDF()">📄 PDF Download</button>
+    </div>
+    <div id="news-grid"></div>
+
+    <!-- MIDDLE AD -->
+    <div class="ad-middle">
+      <div class="ad-label" style="font-family:'Courier Prime',monospace;font-size:8px;color:#999;letter-spacing:2px;text-align:center;margin-bottom:4px;">ADVERTISEMENT</div>
+      <div class="ad-box">AdSense Ad — Approval ke baad yahan dikhega</div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  <p>© 2025 Rajniti Samachar &nbsp;·&nbsp; <a href="about.html">About</a> &nbsp;·&nbsp; <a href="privacy.html">Privacy Policy</a> &nbsp;·&nbsp; Made in India 🇮🇳</p>
+</footer>
+
+<!-- MOBILE BOTTOM NAV -->
+<div class="bottom-nav">
+  <div class="nav-row">
+    <a href="index.html" class="active"><span class="icon">🏠</span>Home</a>
+    <a href="about.html"><span class="icon">ℹ️</span>About</a>
+    <a href="privacy.html"><span class="icon">🔒</span>Privacy</a>
+  </div>
+</div>
+
+<script>
+  // Date
+  document.getElementById('today-date').textContent = new Date().toLocaleDateString('hi-IN', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  // Gemini API Key
+  const GEMINI_API_KEY = "AIzaSyCAEh1fNAydM6NUD14TnIw7ljn6mT3aa7c;
+
+  let newsData = [];
+
+  function setTopic(t) {
+    document.getElementById('topic-input').value = t;
+    fetchNews();
+  }
+
+  async function fetchNews() {
+    const topic = document.getElementById('topic-input').value.trim() || 'India politics';
+    const count = document.getElementById('count-select').value;
+    const fetchBtn = document.getElementById('fetch-btn');
+    const statusBar = document.getElementById('status-bar');
+    const statusText = document.getElementById('status-text');
+    const errorBox = document.getElementById('error-box');
+    const newsOutput = document.getElementById('news-output');
+
+    fetchBtn.disabled = true;
+    statusBar.className = 'status-bar active';
+    errorBox.style.display = 'none';
+    newsOutput.className = 'news-output';
+
+    try {
+      statusText.textContent = `"${topic}" ki news dhundh raha hoon...`;
+
+      const prompt = `You are a bilingual Indian political news reporter.
+Find ${count} latest political news about: "${topic}". Today: ${new Date().toDateString()}.
+Respond ONLY with valid JSON, no markdown, no extra text:
+{"headlines":[{"headline_hindi":"Hindi headline in Devanagari","headline_english":"English headline","summary_hindi":"3-4 sentences in Devanagari Hindi","summary_english":"3-4 sentences in English","source":"source name"}]}`;
+
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: { temperature: 0.7, maxOutputTokens: 3000 },
+            tools: [{ googleSearch: {} }]
+          })
+        }
+      );
+
+      if (!response.ok) {
+        const e = await response.json();
+        throw new Error(e.error?.message || `Error ${response.status}`);
+      }
+
+      const data = await response.json();
+      let text = data.candidates?.[0]?.content?.parts?.filter(p=>p.text)?.map(p=>p.text)?.join('') || '';
+      text = text.replace(/```json|```/g,'').trim();
+      const j = text.indexOf('{'), k = text.lastIndexOf('}');
+      if (j === -1) throw new Error('Response parse nahi hua');
+      const parsed = JSON.parse(text.substring(j, k+1));
+      newsData = parsed.headlines || [];
+      if (!newsData.length) throw new Error('Koi news nahi mili');
+
+      document.getElementById('output-title').textContent = `"${topic}" — ${newsData.length} Khabarein`;
+      const grid = document.getElementById('news-grid');
+      grid.innerHTML = '';
+      newsData.forEach((item, i) => {
+        const c = document.createElement('div');
+        c.className = 'news-card';
+        c.innerHTML = `
+          <div class="news-num">KHABAR ${String(i+1).padStart(2,'0')}</div>
+          <div class="news-hl">${item.headline_hindi}</div>
+          <div class="news-hl-en">${item.headline_english}</div>
+          <div class="news-body">
+            <div class="news-hi">${item.summary_hindi}</div>
+            <div class="news-en">${item.summary_english}</div>
+            <span class="news-src">📌 ${item.source||'News'}</span>
+          </div>`;
+        grid.appendChild(c);
+      });
+
+      statusBar.className = 'status-bar';
+      newsOutput.className = 'news-output visible';
+
+    } catch(err) {
+      statusBar.className = 'status-bar';
+      errorBox.style.display = 'block';
+      errorBox.textContent = '❌ ' + err.message;
+    }
+    fetchBtn.disabled = false;
+  }
+
+  function generatePDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+    const pageW=210, margin=18, cW=174;
+    let y=0;
+    const cp=(n=20)=>{ if(y+n>275){doc.addPage();y=20;} };
+
+    doc.setFillColor(192,57,43); doc.rect(0,0,pageW,8,'F');
+    doc.setFillColor(245,240,232); doc.rect(0,8,pageW,42,'F');
+    doc.setDrawColor(26,16,8); doc.setLineWidth(0.8); doc.line(margin,50,pageW-margin,50);
+    doc.setFont('helvetica','bold'); doc.setFontSize(28); doc.setTextColor(26,16,8);
+    doc.text('RAJNITI SAMACHAR', pageW/2, 30, {align:'center'});
+    doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(107,99,85);
+    doc.text('AI POWERED · HINDI & ENGLISH · rajnitisamachar.in', pageW/2, 38, {align:'center'});
+    doc.text(new Date().toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'}).toUpperCase(), pageW/2, 44, {align:'center'});
+    doc.setFillColor(26,16,8); doc.rect(margin,55,cW,8,'F');
+    doc.setFont('helvetica','bold'); doc.setFontSize(9); doc.setTextColor(245,240,232);
+    const topic = document.getElementById('topic-input').value.trim()||'India Politics';
+    doc.text(`TOPIC: ${topic.toUpperCase()}`, pageW/2, 60.5, {align:'center'});
+    y=72;
+
+    newsData.forEach((item,i)=>{
+      cp(50);
+      doc.setFillColor(192,57,43); doc.roundedRect(margin,y,22,7,1,1,'F');
+      doc.setFont('helvetica','bold'); doc.setFontSize(7); doc.setTextColor(255,255,255);
+      doc.text(`KHABAR ${String(i+1).padStart(2,'0')}`, margin+11, y+4.8, {align:'center'});
+      y+=10;
+      doc.setFont('helvetica','bold'); doc.setFontSize(13); doc.setTextColor(26,16,8);
+      const hl=doc.splitTextToSize(item.headline_hindi,cW); doc.text(hl,margin,y); y+=hl.length*6+1;
+      doc.setFont('helvetica','italic'); doc.setFontSize(9); doc.setTextColor(107,99,85);
+      const hle=doc.splitTextToSize(item.headline_english,cW); doc.text(hle,margin,y); y+=hle.length*4.5+4;
+      doc.setDrawColor(200,195,185); doc.setLineWidth(0.3); doc.line(margin,y,pageW-margin,y); y+=5;
+      doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(40,32,20);
+      const sh=doc.splitTextToSize(item.summary_hindi,cW); cp(sh.length*5+20); doc.text(sh,margin,y); y+=sh.length*5+3;
+      doc.setFont('helvetica','italic'); doc.setFontSize(9); doc.setTextColor(100,95,85);
+      const se=doc.splitTextToSize(item.summary_english,cW); cp(se.length*4.5+20); doc.text(se,margin,y); y+=se.length*4.5+3;
+      doc.setFillColor(107,99,85); doc.roundedRect(margin,y,40,5.5,0.8,0.8,'F');
+      doc.setFont('helvetica','bold'); doc.setFontSize(7); doc.setTextColor(255,255,255);
+      doc.text((item.source||'News').toUpperCase(), margin+3, y+3.8); y+=12;
+      if(i<newsData.length-1){doc.setDrawColor(26,16,8);doc.setLineWidth(0.2);doc.line(margin,y,pageW-margin,y);y+=8;}
+    });
+
+    const total=doc.internal.getNumberOfPages();
+    for(let p=1;p<=total;p++){
+      doc.setPage(p); doc.setFillColor(26,16,8); doc.rect(0,285,pageW,12,'F');
+      doc.setFont('helvetica','normal'); doc.setFontSize(7); doc.setTextColor(200,195,185);
+      doc.text('RAJNITI SAMACHAR · rajnitisamachar.in', margin, 292);
+      doc.text(`PAGE ${p}/${total}`, pageW-margin, 292, {align:'right'});
+    }
+    doc.save(`Rajniti-Samachar-${new Date().toISOString().slice(0,10)}.pdf`);
+  }
+
+  // PWA Service Worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  }
+</script>
+</body>
+</html>
